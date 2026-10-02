@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clasificador de Números</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <header>
+            <div>
+                <h1>Clasificador de Números</h1>
+                <p>Registra y clasifica números pares e impares</p>
+            </div>
+
+            <div class="logo">
+                N°
+            </div>
+        </header>
+
+
+        <!-- FORMULARIO -->
+        <section class="card formulario">
+
+            <h2>Nuevo número</h2>
+
+            <form action="/agregar" method="POST">
+
+                <div class="input-group">
+                    <label for="numero">Ingresa un número</label>
+
+                   <input 
+    type="text"
+    id="numero"
+    name="numero"
+    placeholder="Ingresa un número"
+    inputmode="numeric"
+    maxlength="15"
+    pattern="[0-9]{1,15}"
+    required
+>
+
+                    <button type="submit">
+                        Clasificar número
+                    </button>
+                </div>
+
+            </form>
+
+        </section>
+
+
+      
+        <!-- TABLA -->
+        <section class="card tabla-container">
+
+            <div class="tabla-header">
+                <div>
+                    <h2>Historial de números</h2>
+                    <p>Registro de números clasificados</p>
+                </div>
+            </div>
+
+            <div class="table-wrapper">
+
+                <table>
+
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Número</th>
+                            <th>Clasificación</th>
+                            <th>Fecha</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        {% for numero in numeros %}
+
+                        <tr>
+
+                            <td>{{ loop.index }}</td>
+
+                            <td class="numero">
+                                {{ numero.numero }}
+                            </td>
+
+                            <td>
+
+                                {% if numero.tipo == "Par" %}
+
+                                    <span class="badge par-badge">
+                                        PAR
+                                    </span>
+
+                                {% else %}
+
+                                    <span class="badge impar-badge">
+                                        IMPAR
+                                    </span>
+
+                                {% endif %}
+
+                            </td>
+
+                            <td>
+                                {{ numero.fecha }}
+                            </td>
+
+                        </tr>
+
+                        {% else %}
+
+                        <tr>
+                            <td colspan="4" class="empty">
+                                No hay números registrados todavía.
+                            </td>
+                        </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+    </div>
+
+</body>
+</html>
